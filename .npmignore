@@ -1,0 +1,8 @@
+# Kept out of the published tarball.
+# `files` in package.json is the allowlist, so this is belt-and-braces only.
+node_modules/
+*.log
+*.tgz
+.gitignore
+.DS_Store
+Thumbs.db

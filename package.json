@@ -1,0 +1,54 @@
+{
+  "name": "dsh-app-control",
+  "version": "1.0.0",
+  "description": "Restart, update and inspect the DeepSeek Harness desktop app from inside a DSH session, as model-facing tools. Closes the app through a WMI-detached scheduler so the relaunch survives `taskkill /T` and the helper window closing, then reopens it automatically. · 在 DSH 会话内向模型提供 dsh_restart / dsh_update / dsh_status 三个工具：经由 WMI 脱离进程树的调度器关闭并自动重开桌面应用，规避自毁、控制台继承与批处理 CRLF 三个坑。",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "restart",
+    "relaunch",
+    "plugin-update",
+    "wmi",
+    "windows",
+    "electron"
+  ],
+  "files": [
+    "src",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18",
+    "dsh": ">=0.1.7-rc"
+  },
+  "os": [
+    "win32"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "compatibility": {
+      "dsh": ">=0.1.7-rc"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheng-wj/dsh-app-control.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cheng-wj/dsh-app-control/issues"
+  },
+  "homepage": "https://github.com/cheng-wj/dsh-app-control#readme",
+  "author": "chengwj <chengwjn@126.com>",
+  "license": "MIT"
+}
