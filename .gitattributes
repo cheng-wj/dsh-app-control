@@ -5,7 +5,8 @@
 # error. Git's default `core.autocrlf=true` would store it as LF and break
 # every clone, so the batch file is pinned to CRLF in the repository itself.
 #
-# Do not relax this. Verify with: node scripts/check-crlf.js (or see PUBLISHING.md)
+# Do not relax this. Verify after a fresh clone with:
+#   node scripts/check-crlf.js
 *.bat text eol=crlf
 *.cmd text eol=crlf
 

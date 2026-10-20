@@ -21,7 +21,11 @@
   ],
   "files": [
     "src",
-    "assets",
+    "assets/dsh-tools.bat",
+    "assets/launch-app.ps1",
+    "assets/launch-detached.ps1",
+    "assets/run-visible.ps1",
+    "assets/list-plugins.js",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"
