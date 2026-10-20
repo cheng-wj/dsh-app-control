@@ -1,5 +1,9 @@
 # dsh-app-control
 
+[![npm](https://img.shields.io/npm/v/dsh-app-control.svg)](https://www.npmjs.com/package/dsh-app-control)
+[![license](https://img.shields.io/npm/l/dsh-app-control.svg)](LICENSE)
+[![platform](https://img.shields.io/badge/platform-Windows-blue.svg)](#平台)
+
 在 DSH 会话内向模型提供三个工具，用来**重启**、**更新**和**体检** DeepSeek Harness 桌面应用本身。
 
 核心卖点不是"能重启"，而是**重启不会把自己弄死**。这件事比看上去难：从 DSH 会话里重启 DSH，要同时躲开四个独立的坑，每一个都会让应用关上之后再也打不开，而且不报错。
