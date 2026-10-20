@@ -1,17 +1,20 @@
 # 发布到 npm
 
-> 状态：**已准备好，但尚未发布。** 下面每一步都需要你自己执行，因为我不能替你登录 npm。
+> 状态：**代码已推送到 GitHub，npm 尚未发布。**
+>
+> - 仓库：<https://github.com/cheng-wj/dsh-app-control>（已创建、已推送、CRLF 已验证）
+> - 剩下唯一一步需要你自己做：`npm login`。我不能替你登录 npm。
 
 ---
 
-## 0. 发布前必须改的两处
+## 0. 元数据（已填好）
 
-`package.json` 里有占位符，不改会在 npm 上显示成 `YOUR-GITHUB-USERNAME`：
+`package.json` 的仓库信息已经指向真实仓库，**不用再改**：
 
 ```json
-"repository": { "url": "git+https://github.com/<你的GitHub用户名>/dsh-app-control.git" },
-"bugs":       { "url": "https://github.com/<你的GitHub用户名>/dsh-app-control/issues" },
-"homepage":   "https://github.com/<你的GitHub用户名>/dsh-app-control#readme",
+"repository": { "url": "git+https://github.com/cheng-wj/dsh-app-control.git" },
+"bugs":       { "url": "https://github.com/cheng-wj/dsh-app-control/issues" },
+"homepage":   "https://github.com/cheng-wj/dsh-app-control#readme",
 "author":     "chengwj <chengwjn@126.com>"
 ```
 
@@ -110,7 +113,7 @@ git init
 git add .
 git commit -m "feat: dsh-app-control — restart/update/status tools for DSH"
 git branch -M main
-git remote add origin https://github.com/<你的GitHub用户名>/dsh-app-control.git
+git remote add origin https://github.com/cheng-wj/dsh-app-control.git
 git push -u origin main
 ```
 
