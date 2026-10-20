@@ -28,19 +28,42 @@
 
 ## 安装
 
-### 本地安装（推荐，改代码立刻生效）
+`dsh plugin add` 底层就是 `pnpm add`，所以**不发布到 npm 也能装**。三种方式任选：
+
+### 方式一：从 Git 安装（无需 npm 账号，推荐给自己和朋友用）
+
+```powershell
+dsh plugin --profile desktop add git+https://github.com/cheng-wj/dsh-app-control.git
+```
+
+装的是仓库快照，不需要 npm 账号、不需要登录、不需要发布。已实测：从 Git 装下来的 `assets/dsh-tools.bat` 仍是 399 对 CRLF（`.gitattributes` 保住了它），三个工具正常注册。
+
+缺点是升级要重新 `add` 一次，没有版本号语义。
+
+### 方式二：本地目录链接（推荐，改代码立刻生效）
 
 ```powershell
 dsh plugin --profile desktop add link:"C:\Users\ZY\Documents\deepseek-harness\默认工作区\dsh-app-control-plugin"
 ```
 
-重启 DSH 后生效。用 `link:` 装的是目录软链，改完 `src/index.js` 重启就生效，不需要重新打包。
+`link:` 装的是目录软链，改完 `src/index.js` 重启就生效，不需要重新打包。适合自己开发调试。
 
-### 从 npm 安装（发布之后）
+### 方式三：tarball 离线分发
+
+```powershell
+npm pack                                    # 产出 dsh-app-control-1.0.0.tgz
+dsh plugin --profile desktop add "C:\path\to\dsh-app-control-1.0.0.tgz"
+```
+
+适合拷给别人、内网分发，或者留个可归档的快照。
+
+### 方式四：从 npm 安装（需要先发布）
 
 ```powershell
 dsh plugin --profile desktop add dsh-app-control
 ```
+
+**只有想让陌生人一行命令装上时才需要发布到 npm。** 发布前注意：国内常用的 `registry.npmmirror.com` 是**只读镜像**，在上面既登录不了也发不了包，`npm publish` 必须显式指定 `--registry https://registry.npmjs.org`。
 
 ---
 
