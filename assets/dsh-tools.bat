@@ -218,7 +218,7 @@ rem no packages would kill DSH, install nothing, and relaunch it for no reason.
 if "!PKGS!"=="" (
     echo [ERROR] update mode needs at least one package argument.
     echo         example: dsh-tools.bat update dshmarket@1.66.44
-    echo         (options --delay N and --profile NAME are not packages)
+    echo         ^(options --delay N and --profile NAME are not packages^)
     exit /b 2
 )
 

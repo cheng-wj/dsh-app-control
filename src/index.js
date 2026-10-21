@@ -243,11 +243,30 @@ function runPowerShell(scriptPath, args, timeoutMs) {
     })
 }
 
-/** Newest log file in LOG_DIR, or '' when there is none. */
-function newestLog() {
+/**
+ * Extract the log path the scheduler announced on stdout.
+ *
+ * launch-detached.ps1 prints a block that includes the line `  log  : <path>`.
+ * Reading it from there is exact, whereas guessing by mtime picks up whatever
+ * unrelated invocation happened to finish last (a stale status log, typically).
+ */
+function logFromStdout(stdout) {
+    const m = /^\s*log\s*:\s*(.+?)\s*$/m.exec(stdout || '')
+    return m ? m[1] : ''
+}
+
+/**
+ * Newest log file in LOG_DIR, or '' when there is none.
+ *
+ * When `mode` is given, only logs for that mode are considered. Without this
+ * filter a `dsh_update` call would report the newest log of ANY mode, so an
+ * unrelated `status` run could be shown as the update's progress file.
+ */
+function newestLog(mode) {
     try {
+        const prefix = mode ? `dsh-tools-${mode}-` : ''
         const files = readdirSync(LOG_DIR)
-            .filter((f) => f.endsWith('.log'))
+            .filter((f) => f.endsWith('.log') && f.startsWith(prefix))
             .map((f) => join(LOG_DIR, f))
             .filter((f) => statSync(f).isFile())
         if (files.length === 0) return ''
@@ -300,7 +319,7 @@ export function apply(ctx, config = {}) {
         const result = await runPowerShell(script, args, 30_000)
 
         if (result.code !== 0) {
-            const log = newestLog()
+            const log = logFromStdout(result.stdout) || newestLog(mode)
             const detail = result.stderr.trim() || result.stdout.trim()
                 || (log ? readFileSync(log, 'utf8').trim() : '')
             throw new Error(`dsh-app-control: scheduler exited with code ${result.code}${detail ? `\n${detail}` : ''}`)
@@ -309,7 +328,9 @@ export function apply(ctx, config = {}) {
         return {
             mode,
             delaySeconds: delay,
-            logFile: newestLog(),
+            // Exact path from the scheduler's own output; the mtime scan is only
+            // a fallback for an older scheduler that does not announce it.
+            logFile: logFromStdout(result.stdout) || newestLog(mode),
             schedulerOutput: result.stdout.trim(),
         }
     }
